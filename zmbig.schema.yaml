@@ -1,6 +1,16 @@
 # Rime schema settings
 # encoding: utf-8
 
+__build_info:
+  rime_version: 1.8.5
+  timestamps:
+    default: 1688888886
+    default.custom: 1688888886
+    punctuation: 1688888886
+    punctuation.custom: 0
+    zmbig.custom: 0
+    zmbig.schema: 1688888886
+
 schema:
   schema_id: zmbig
   name: "巨集郑码"
@@ -22,6 +32,8 @@ switches:
     states: [ 半角, 全角 ]
 
 engine:
+  filters:
+    - "simplifier@tradition"
   processors:
     - ascii_composer
     - recognizer
@@ -41,6 +53,8 @@ engine:
     - punct_translator
     - table_translator
     - reverse_lookup_translator
+    - "lua_translator@date_translator"
+    - "lua_translator@calculator"
 
 speller:
   delimiter: " '"
@@ -66,9 +80,97 @@ reverse_lookup:
     - xform/([jqxy])v/$1u/
 
 punctuator:
+  full_shape:
+    " ": {commit: "　"}
+    "!": {commit: "！"}
+    "\"": {pair: ["“", "”"]}
+    "#": ["＃", "⌘"]
+    "$": "￥"
+    "%": "％"
+    "&": "＆"
+    "'": {pair: ["‘", "’"]}
+    "(": "（"
+    ")": "）"
+    "*": ["＊", "・", "×"]
+    "+": "＋"
+    ",": {commit: "，"}
+    "-": "－"
+    .: {commit: "。"}
+    "/": ["／", "÷"]
+    ":": {commit: "："}
+    ";": {commit: "；"}
+    "<": ["《", "〈", "«", "‹"]
+    "=": "＝"
+    ">": ["》", "〉", "»", "›"]
+    "?": {commit: "？"}
+    "@": "＠"
+    "[": ["「", "【", "〔", "［"]
+    "\\": ["、", "＼"]
+    "]": ["」", "】", "〕", "］"]
+    "^": {commit: "……"}
+    _: "——"
+    "`": "｀"
+    "{": ["『", "〖", "｛"]
+    "|": ["·", "｜", "§", "¦"]
+    "}": ["』", "〗", "｝"]
+    "~": "～"
+  half_shape:
+    "!": {commit: "！"}
+    "\"": {pair: ["“", "”"]}
+    "#": "#"
+    "$": "￥"
+    "%": ["%", "％", "°", "℃"]
+    "&": "&"
+    "'": {pair: ["‘", "’"]}
+    "(": "（"
+    ")": "）"
+    "*": ["·", "×"]
+    "+": "+"
+    ",": {commit: "，"}
+    "-": {commit: "-"}
+    .: {commit: "。"}
+    "/": {commit: "、"}
+    ":": {commit: "："}
+    ";": {commit: "；"}
+    "<": {commit: "《"}
+    "=": {commit: "="}
+    ">": {commit: "》"}
+    "?": {commit: "？"}
+    "@": "@"
+    "[": {commit: "【"}
+    "\\": {commit: "、"}
+    "]": {commit: "】"}
+    "^": {commit: "……"}
+    _: "——"
+    "`": "`"
+    "{": "「"
+    "|": "|"
+    "}": "」"
+    "~": "~"
   import_preset: default
 
 key_binder:
+  bindings:
+    - {accept: semicolon, send: 2, when: has_menu}
+    - {accept: apostrophe, send: 3, when: has_menu}
+    - {accept: bracketleft, send: Page_Up, when: has_menu}
+    - {accept: bracketright, send: Page_Down, when: has_menu}
+    - {accept: "Shift+Tab", send: Page_Up, when: has_menu}
+    - {accept: Tab, send: Page_Down, when: has_menu}
+    - {accept: Return, send: Escape, when: composing}
+    - {accept: "Control+p", send: Up, when: composing}
+    - {accept: "Control+n", send: Down, when: composing}
+    - {accept: "Control+b", send: Left, when: composing}
+    - {accept: "Control+f", send: Right, when: composing}
+    - {accept: "Control+a", send: Home, when: composing}
+    - {accept: "Control+e", send: End, when: composing}
+    - {accept: "Control+d", send: Delete, when: composing}
+    - {accept: "Control+k", send: "Shift+Delete", when: composing}
+    - {accept: "Control+h", send: BackSpace, when: composing}
+    - {accept: "Control+g", send: Escape, when: composing}
+    - {accept: "Control+bracketleft", send: Escape, when: composing}
+    - {accept: "Alt+v", send: Page_Up, when: composing}
+    - {accept: "Control+v", send: Page_Down, when: composing}
   import_preset: default
 
 recognizer:

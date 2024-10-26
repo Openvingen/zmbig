@@ -1,5 +1,16 @@
 # Rime schema
 # encoding: utf-8
+__build_info:
+  rime_version: 1.8.5
+  timestamps:
+    default: 1688888866
+    default.custom: 1688888866
+    punctuation: 1688888866
+    punctuation.custom: 0
+    pinyin123.custom: 0
+    pinyin123.schema: 1688888866
+
+
 
 schema:
   schema_id: pinyin123
@@ -85,3 +96,4 @@ recognizer:
   import_preset: default
   patterns:
     reverse_lookup: "`[a-z]*'?$"
+
